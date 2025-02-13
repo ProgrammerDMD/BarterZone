@@ -1,15 +1,13 @@
 @using System.Web.Optimization
 <html>
-<head>
-    @Styles.Render("~/bundles/css")
-</head>
-<body>
-    <div>
+    <head>
+        <title>BarterZone / @ViewBag.Title</title>
+        @Styles.Render("~/bundles/css")
+    </head>
+    <body class="min-h-screen overflow-x-hidden flex flex-col gap-4">
         @Html.Partial("_Header")
-    </div>
-    @RenderBody()
-    <div>
+        @RenderBody()
         @Html.Partial("_Footer")
-    </div>
-</body>
+        @Scripts.Render("~/bundles/js")
+    </body>
 </html>
