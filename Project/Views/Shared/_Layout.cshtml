@@ -1,0 +1,15 @@
+@using System.Web.Optimization
+<html>
+<head>
+    @Styles.Render("~/bundles/css")
+</head>
+<body>
+    <div>
+        @Html.Partial("_Header")
+    </div>
+    @RenderBody()
+    <div>
+        @Html.Partial("_Footer")
+    </div>
+</body>
+</html>
