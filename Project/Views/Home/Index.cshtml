@@ -1,13 +1,367 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Home";
+    ViewBag.ActiveMenu = "Home";
+    
+    var categories = ViewData["categories"] as Dictionary<string, string> ?? new Dictionary<string, string>();
 }
-<h1>Welcome to the Home Page</h1>
+<div class="flex-1 flex flex-col items-center gap-4 justify-between h-screen">
+    <!-- Available Trades -->
+    <div class="flex flex-col justify-center w-full px-12 gap-4">
+        <div class="flex gap-2 w-full justify-between max-sm:flex-col max-sm:mx-auto">
+            <!-- Search -->
+            <div class="max-w-lg max-sm:w-full max-sm:max-w-full">
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+                        <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24"
+                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                    </div>
+                    <input
+                        class="py-2 ps-10 pe-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                        type="text" role="combobox" aria-expanded="false" placeholder="Search for an object" value=""
+                        data-hs-combo-box-input="">
+                </div>
 
-<!-- Buttons to navigate -->
-<a href="@Url.Action("About", "Home")">
-    <button>Go to About Page</button>
-</a>
+                <!-- SearchBox Dropdown -->
+                <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg" style="display: none;"
+                     data-hs-combo-box-output="">
+                    <div
+                        class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
+                        data-hs-combo-box-output-items-wrapper=""></div>
+                </div>
+                <!-- End SearchBox Dropdown -->
+            </div>
+            <!-- End Search -->
+            <div class="flex gap-2">
+                <!-- Category -->
+                <div class="hs-dropdown [--auto-close:inside] relative inline-flex">
+                    <button type="button" class="hs-dropdown-toggle flex justify-center items-center w-fit text-sm font-semibold rounded-lg border px-4 py-2 gap-2 border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                        <span>Category</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 hs-dropdown-open:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md" role="tooltip">
+                        <ul class="max-w-sm flex flex-col">
+                            @foreach (var category in categories)
+                            {
+                                <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                    <div class="relative flex items-start w-full cursor-pointer">
+                                        <div class="flex items-center h-5">
+                                            <input id="category-@category.Key" name="category" type="checkbox" class="border-gray-200 rounded disabled:opacity-50 cursor-pointer" checked="">
+                                        </div>
+                                        <label for="category-@category.Key" class="ms-3.5 block w-full text-sm text-gray-600 cursor-pointer">
+                                            @category.Value
+                                        </label>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Category -->
+                <!-- Sort by -->
+                <div class="hs-dropdown [--auto-close:inside] relative inline-flex">
+                    <button type="button" class="hs-dropdown-toggle flex justify-center items-center w-fit text-sm font-semibold rounded-lg border px-4 py-2 gap-2 border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+                        <span>Sort by</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="hs-dropdown-menu hs-dropdown-open:opacity-100 hs-dropdown-open:visible hidden opacity-0 transition-opacity absolute invisible z-10 max-w-xs bg-white border border-gray-100 text-start rounded-lg shadow-md" role="tooltip">
+                        <ul class="max-w-sm flex flex-col">
+                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                <div class="relative flex items-start w-full">
+                                    <div class="flex items-center h-5">
+                                        <input id="sortby-newest" name="sortby" type="radio" class="border-gray-200 rounded-full disabled:opacity-50" checked="">
+                                    </div>
+                                    <label for="sortby-newest" class="ms-3 block w-full text-sm text-gray-600">
+                                        Newest
+                                    </label>
+                                </div>
+                            </li>
 
-<a href="@Url.Action("Contact", "Home")">
-    <button>Go to Contact Page</button>
-</a>
+                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                <div class="relative flex items-start w-full">
+                                    <div class="flex items-center h-5">
+                                        <input id="sortby-trending" name="sortby" type="radio" class="border-gray-200 rounded-full disabled:opacity-50">
+                                    </div>
+                                    <label for="sortby-trending" class="ms-3 block w-full text-sm text-gray-600">
+                                        Trending
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                <div class="relative flex items-start w-full">
+                                    <div class="flex items-center h-5">
+                                        <input id="sortby-lowtohigh" name="sortby" type="radio" class="border-gray-200 rounded-full disabled:opacity-50">
+                                    </div>
+                                    <label for="sortby-lowtohigh" class="ms-3 block w-full text-sm text-gray-600">
+                                        Low Price to High Price
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                <div class="relative flex items-start w-full">
+                                    <div class="flex items-center h-5">
+                                        <input id="sortby-hightolow" name="sortby" type="radio" class="border-gray-200 rounded-full disabled:opacity-50">
+                                    </div>
+                                    <label for="sortby-hightolow" class="ms-3 block w-full text-sm text-gray-600">
+                                        High Price to Low Price
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Sort by -->
+            </div>
+        </div>
+        <!-- Cards Section -->
+        <div class="w-full">
+            <div class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
+                <!-- Card -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Card title
+                    </h3>
+                    <p class="mt-1 text-xs font-medium uppercase text-gray-500">
+                        Card subtitle
+                    </p>
+                    <p class="mt-2 text-gray-500">
+                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                    </p>
+                    <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                       href="#">
+                        Card link
+                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </a>
+                </div>
+                <!-- End Card -->
+            </div>
+        </div>
+        <!-- End Cards Section -->
+    </div>
+    <!-- End Available Trades -->
+    <!-- Pagination -->
+    <nav class="flex items-center gap-x-1" aria-label="Pagination">
+        <button type="button"
+                class="min-h-[38px] min-w-[38px] py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Previous">
+            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            <span>Previous</span>
+        </button>
+        <div class="flex items-center gap-x-1">
+            <button type="button"
+                    class="min-h-[38px] min-w-[38px] text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+                    aria-current="page">1
+            </button>
+            <button type="button"
+                    class="min-h-[38px] min-w-[38px] text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                2
+            </button>
+            <button type="button"
+                    class="min-h-[38px] min-w-[38px] text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+                3
+            </button>
+        </div>
+        <button type="button"
+                class="min-h-[38px] min-w-[38px] py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+                aria-label="Next">
+            <span>Next</span>
+            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"></path>
+            </svg>
+        </button>
+    </nav>
+    <!-- End Pagination -->
+</div>
