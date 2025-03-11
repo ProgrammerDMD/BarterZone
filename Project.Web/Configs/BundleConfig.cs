@@ -1,6 +1,6 @@
 using System.Web.Optimization;
 
-namespace Project
+namespace Project.Web
 {
     public static class BundleConfig
     {

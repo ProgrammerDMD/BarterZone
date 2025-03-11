@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Project</RootNamespace>
-    <AssemblyName>Project</AssemblyName>
+    <AssemblyName>Project.Web</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -214,6 +214,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project.BusinessLogic\Project.BusinessLogic.csproj">
+      <Project>{6448e5e3-8921-4383-bb79-4dbc1e79a0b1}</Project>
+      <Name>Project.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Domain\Project.Domain.csproj">
+      <Project>{52e25d81-3f39-4e4c-84ff-85030c9cedb7}</Project>
+      <Name>Project.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

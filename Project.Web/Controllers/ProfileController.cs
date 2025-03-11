@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Project.Controllers
+namespace Project.Web.Controllers
 {
-    public class AdminController : Controller
+    public class ProfileController : Controller
     {
         public ActionResult Index()
         {

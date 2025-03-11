@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Project.Controllers
+namespace Project.Web.Controllers
 {
-    public class HistoryController : Controller
+    public class MatchesController : Controller
     {
         public ActionResult Index()
         {
