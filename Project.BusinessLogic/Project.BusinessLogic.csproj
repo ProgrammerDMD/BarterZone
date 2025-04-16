@@ -41,6 +41,7 @@
         </Reference>
         <Reference Include="System" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
@@ -49,6 +50,7 @@
         <Compile Include="BusinessLogic.cs" />
         <Compile Include="Core\AppDbContext.cs" />
         <Compile Include="Core\UserService.cs" />
+        <Compile Include="DBModel\UserContext.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -62,6 +64,8 @@
       </ProjectReference>
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="Core\" />
+      <Folder Include="DBModel\Seed\" />
       <Folder Include="Interfaces\" />
     </ItemGroup>
     <ItemGroup>
