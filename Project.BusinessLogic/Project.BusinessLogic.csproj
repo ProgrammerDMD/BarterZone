@@ -48,6 +48,8 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="BusinessLogic.cs" />
+        <Compile Include="Core\AppDbContext.cs" />
+        <Compile Include="Core\UserService.cs" />
         <Compile Include="DBModel\UserContext.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
