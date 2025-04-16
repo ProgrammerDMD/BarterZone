@@ -37,10 +37,12 @@
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
         <Reference Include="System.Xml"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Domain.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="User.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Project.Helpers\Project.Helpers.csproj">
