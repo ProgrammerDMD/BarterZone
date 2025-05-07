@@ -3,20 +3,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Domain.Entities
 {
-    public class UserDbTable
+    [Table("Users")]
+    public class UserTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Required]
-        [Display(Name = "Email")]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = "Invalid email length")]
+        [EmailAddress]
+        [StringLength(255, ErrorMessage = "Invalid email")]
         public string Email { get; set; }
         
         [Required]
-        [Display(Name = "Password")]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 50 characters")]
+        [StringLength(255, ErrorMessage = "Password must be between 8 and 50 characters")]
         public string Password { get; set; }
     }
 }

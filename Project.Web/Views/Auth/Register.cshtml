@@ -1,0 +1,47 @@
+@model Project.Domain.Entities.Authentication.RegisterViewModel
+
+@{
+    ViewBag.Title = "Sign up";
+    ViewBag.ActiveMenu = "Sign up";
+    Layout = "_Layout.cshtml";
+}
+
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-lg">
+        <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started today</h1>
+
+        <p class="mx-auto mt-4 max-w-md text-center text-gray-500">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati sunt dolores deleniti
+            inventore quaerat mollitia?
+        </p>
+
+        @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8" }))
+        {
+            @Html.AntiForgeryToken()
+            <p class="text-center text-lg font-medium">Create a BarterZone Account</p>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-red-600 text-sm mb-4" })
+            <div>
+                @Html.LabelFor(model => model.Email, new { @class = "block text-sm mb-2" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs", placeholder = "Enter email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-red-600 text-sm" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Password, new { @class = "block text-sm mb-2" })
+                @Html.PasswordFor(m => m.Password, new { @class = "w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs", placeholder = "Enter password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-red-600 text-sm" })
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.ConfirmPassword, new { @class = "block text-sm mb-2" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "w-full rounded-lg border-gray-200 p-4 text-sm shadow-xs", placeholder = "Repeat password" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-red-600 text-sm" })
+            </div>
+
+            <button type="submit" class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white">
+                Sign up
+            </button>
+        }
+    </div>
+</div>
