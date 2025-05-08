@@ -13,7 +13,7 @@ namespace Project.BusinessLogic.Core
 {
     public class JwtAuthorizeAttribute : AuthorizeAttribute
     {
-        public string Role { get; set; } = "User";
+        public string Role { get; set; }
         public bool RedirectToLogin { get; set; }
 
         public JwtAuthorizeAttribute(bool redirectToLogin = true)
