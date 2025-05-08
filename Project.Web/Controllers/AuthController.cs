@@ -123,8 +123,8 @@ namespace Project.Web.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                         ClaimValueTypes.Integer64),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, user.Role)
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role.ToLowerInvariant())
                 };
 
                 var tokenDescriptor = new SecurityTokenDescriptor

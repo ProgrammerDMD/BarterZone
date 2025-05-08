@@ -13,7 +13,7 @@ namespace Project.BusinessLogic.Core.JWT
 {
     public class JwtAuthorizer
     {
-        public static bool Authorize(HttpContextBase httpContext)
+        public static bool Authorize(HttpContextBase httpContext, string requiredRole = null)
         {
             var authToken = HttpUtility.UrlDecode(httpContext.Request.Cookies["AuthToken"]?.Value);
             if (string.IsNullOrWhiteSpace(authToken)) return false;
@@ -38,6 +38,12 @@ namespace Project.BusinessLogic.Core.JWT
                 }, out SecurityToken validatedToken);
 
                 httpContext.User = principal;
+                
+                if (!string.IsNullOrWhiteSpace(requiredRole))
+                {
+                    return principal.IsInRole(requiredRole.ToLower());
+                }
+                
                 return true;
             }
             catch (SecurityTokenValidationException stve)

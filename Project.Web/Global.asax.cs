@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -21,8 +22,7 @@ namespace Project.Web
            AreaRegistration.RegisterAllAreas();
            RouteConfig.RegisterRoutes(RouteTable.Routes);
            BundleConfig.RegisterBundles(BundleTable.Bundles);
-           JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-           AntiForgeryConfig.UniqueClaimTypeIdentifier = JwtRegisteredClaimNames.Sub;
+           AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
         }
     }
 }

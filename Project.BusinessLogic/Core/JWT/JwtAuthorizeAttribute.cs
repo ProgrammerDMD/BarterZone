@@ -13,16 +13,26 @@ namespace Project.BusinessLogic.Core
 {
     public class JwtAuthorizeAttribute : AuthorizeAttribute
     {
+        public string Role { get; set; } = "User";
         public bool RedirectToLogin { get; set; }
 
         public JwtAuthorizeAttribute(bool redirectToLogin = true)
         {
             RedirectToLogin = redirectToLogin;
         }
+        
+        public JwtAuthorizeAttribute(string role, bool redirectToLogin = true) : this(redirectToLogin)
+        {
+            if (!string.IsNullOrWhiteSpace(role))
+            {
+                Role = role;
+            }
+        }
+
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            return JwtAuthorizer.Authorize(httpContext);
+            return JwtAuthorizer.Authorize(httpContext, Role);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
@@ -33,7 +43,14 @@ namespace Project.BusinessLogic.Core
             }
             else
             {
-                base.HandleUnauthorizedRequest(filterContext);
+                if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    filterContext.Result = new HttpStatusCodeResult(System.Net.HttpStatusCode.Forbidden);
+                }
+                else
+                {
+                    filterContext.Result = new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized);
+                }
             }
         }
     }
