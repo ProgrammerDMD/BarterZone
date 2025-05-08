@@ -136,7 +136,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic.cs" />
-    <Compile Include="Core\JwtAuthorizeAttribute.cs" />
+    <Compile Include="Core\Filters\RedirectIfAuthorizedAttribute.cs" />
+    <Compile Include="Core\JWT\JwtAuthorizeAttribute.cs" />
+    <Compile Include="Core\JWT\JwtCookieAuthenticationModule.cs" />
+    <Compile Include="Core\JWT\JwtAuthorizer.cs" />
     <Compile Include="Core\UserService.cs" />
     <Compile Include="DBModel\UserContext.cs" />
     <Compile Include="Migrations\202505072045207_InitialSchema.cs" />

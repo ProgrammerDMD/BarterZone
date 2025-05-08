@@ -2,8 +2,10 @@ using Microsoft.IdentityModel.Logging;
 using Project.BusinessLogic.DBModel;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -16,10 +18,11 @@ namespace Project.Web
     {
         void Application_Start(object sender, EventArgs e)
         {
-            IdentityModelEventSource.ShowPII = true;
            AreaRegistration.RegisterAllAreas();
            RouteConfig.RegisterRoutes(RouteTable.Routes);
            BundleConfig.RegisterBundles(BundleTable.Bundles);
+           JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+           AntiForgeryConfig.UniqueClaimTypeIdentifier = JwtRegisteredClaimNames.Sub;
         }
     }
 }

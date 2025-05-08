@@ -1,18 +1,19 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
-namespace Project.BusinessLogic.Core
+namespace Project.BusinessLogic.Core.JWT
 {
-    public class JwtAuthorizeAttribute : AuthorizeAttribute
+    public class JwtAuthorizer
     {
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        public static bool Authorize(HttpContextBase httpContext)
         {
             var authToken = HttpUtility.UrlDecode(httpContext.Request.Cookies["AuthToken"]?.Value);
             if (string.IsNullOrWhiteSpace(authToken)) return false;
@@ -25,7 +26,7 @@ namespace Project.BusinessLogic.Core
 
             try
             {
-                tokenHandler.ValidateToken(authToken, new TokenValidationParameters
+                var principal = tokenHandler.ValidateToken(authToken, new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidIssuer = issuer,
@@ -36,10 +37,7 @@ namespace Project.BusinessLogic.Core
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
 
-                var jwtToken = (JwtSecurityToken) validatedToken;
-                var identity = new ClaimsIdentity(jwtToken.Claims, "JWT");
-                httpContext.User = new ClaimsPrincipal(identity);
-
+                httpContext.User = principal;
                 return true;
             }
             catch (SecurityTokenValidationException stve)
@@ -57,10 +55,41 @@ namespace Project.BusinessLogic.Core
                 return false;
             }
         }
-
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        
+        public static void DeleteAuthCookie(HttpContextBase httpContext)
         {
-            filterContext.Result = new RedirectResult("~/Auth/Login");
+            var requestCookie = httpContext.Request.Cookies["AuthToken"];
+            string cookiePath = "/";
+            
+            if (requestCookie != null)
+            {
+                if (!string.IsNullOrEmpty(requestCookie.Path))
+                {
+                    cookiePath = requestCookie.Path;
+                }
+
+                var expiredCookie = new HttpCookie("AuthToken")
+                {
+                    Expires = DateTime.UtcNow.AddDays(-1),
+                    HttpOnly = true,
+                    Path = cookiePath,
+                    Secure = httpContext.Request.IsSecureConnection,
+                    Value = string.Empty
+                };
+                httpContext.Response.Cookies.Add(expiredCookie);
+            }
+            else
+            {
+                var expiredCookie = new HttpCookie("AuthToken")
+                {
+                    Expires = DateTime.UtcNow.AddDays(-1),
+                    HttpOnly = true,
+                    Path = "/",
+                    Secure = httpContext.Request.IsSecureConnection,
+                    Value = string.Empty
+                };
+                httpContext.Response.Cookies.Set(expiredCookie);
+            }
         }
     }
 }
