@@ -1,3 +1,4 @@
+using Project.BusinessLogic.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Project.Web.Controllers
     public class ProfileController : Controller
     {
 
-        [Authorize(Roles = "Admin")]
+        [JwtAuthorize]
         public ActionResult Index()
         {
             return View();

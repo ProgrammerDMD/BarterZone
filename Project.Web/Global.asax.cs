@@ -1,4 +1,6 @@
-﻿using System;
+using Microsoft.IdentityModel.Logging;
+using Project.BusinessLogic.DBModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,7 +9,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
-using Project.BusinessLogic.DBModel;
 
 namespace Project.Web
 {
@@ -15,6 +16,7 @@ namespace Project.Web
     {
         void Application_Start(object sender, EventArgs e)
         {
+            IdentityModelEventSource.ShowPII = true;
            AreaRegistration.RegisterAllAreas();
            RouteConfig.RegisterRoutes(RouteTable.Routes);
            BundleConfig.RegisterBundles(BundleTable.Bundles);
