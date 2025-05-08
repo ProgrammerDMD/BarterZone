@@ -50,7 +50,7 @@ namespace Project.Web.Controllers
 
                 if (user != null)
                 {
-                    HttpCookie cookie = await CreateJWTCookie(user);
+                    HttpCookie cookie = CreateJWTCookie(user);
                     if (cookie == null)
                     {
                         return View(model);
@@ -76,7 +76,7 @@ namespace Project.Web.Controllers
 
                 if (user != null)
                 {
-                    HttpCookie cookie = await CreateJWTCookie(user);
+                    HttpCookie cookie = CreateJWTCookie(user);
                     if (cookie == null)
                     {
                         return View(model);
@@ -100,7 +100,7 @@ namespace Project.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private async Task<HttpCookie> CreateJWTCookie(User user)
+        private HttpCookie CreateJWTCookie(User user)
         {
             if (user != null)
             {
