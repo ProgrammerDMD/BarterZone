@@ -72,7 +72,7 @@ namespace Project.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _userService.RegisterUser(model.Email, model.Password);
+                User user = await _userService.RegisterUser(model.Email, model.Name, model.Password);
 
                 if (user != null)
                 {
@@ -124,6 +124,7 @@ namespace Project.Web.Controllers
                     new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                         ClaimValueTypes.Integer64),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Name, user.Name),
                     new Claim(ClaimTypes.Role, user.Role.ToLowerInvariant())
                 };
 

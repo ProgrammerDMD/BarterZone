@@ -150,6 +150,14 @@
     <Compile Include="Migrations\202505080451141_More User Details.Designer.cs">
       <DependentUpon>202505080451141_More User Details.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202505081446473_Added Name column to User Table.cs" />
+    <Compile Include="Migrations\202505081446473_Added Name column to User Table.Designer.cs">
+      <DependentUpon>202505081446473_Added Name column to User Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505081449068_Modified Name Column.cs" />
+    <Compile Include="Migrations\202505081449068_Modified Name Column.Designer.cs">
+      <DependentUpon>202505081449068_Modified Name Column.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,6 +185,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202505080451141_More User Details.resx">
       <DependentUpon>202505080451141_More User Details.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505081446473_Added Name column to User Table.resx">
+      <DependentUpon>202505081446473_Added Name column to User Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505081449068_Modified Name Column.resx">
+      <DependentUpon>202505081449068_Modified Name Column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

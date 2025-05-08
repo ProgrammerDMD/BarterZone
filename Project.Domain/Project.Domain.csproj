@@ -49,6 +49,7 @@
     <Compile Include="Domain.cs" />
     <Compile Include="Entities\Authentication\RegisterViewModel.cs" />
     <Compile Include="Entities\Database\UserTable.cs" />
+    <Compile Include="Entities\Profile\ProfileViewModel.cs" />
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Reference Include="System" />

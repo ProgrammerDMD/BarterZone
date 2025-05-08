@@ -48,6 +48,7 @@ namespace Project.BusinessLogic.Core
                 return new User
                 {
                     Id = user.Id,
+                    Name = user.Name,
                     Role = user.Role,
                     Email = user.Email,
                     CreatedAt = user.CreatedAt
@@ -58,7 +59,7 @@ namespace Project.BusinessLogic.Core
             }
         }
 
-        public async Task<User> RegisterUser(string email, string password, CancellationToken cancellationToken = default)
+        public async Task<User> RegisterUser(string email, string name, string password, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
@@ -81,6 +82,7 @@ namespace Project.BusinessLogic.Core
                     var user = new UserTable
                     {
                         Email = email,
+                        Name = name,
                         Password = hashedPassword,
                         Role = "User",
                         CreatedAt = DateTime.UtcNow
@@ -93,6 +95,7 @@ namespace Project.BusinessLogic.Core
                     return new User
                     {
                         Id = user.Id,
+                        Name = user.Name,
                         Role = user.Role,
                         Email = user.Email,
                         CreatedAt = user.CreatedAt

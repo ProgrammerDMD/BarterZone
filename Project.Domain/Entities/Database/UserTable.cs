@@ -12,6 +12,10 @@ namespace Project.Domain.Entities
         public int Id { get; set; }
 
         [Required]
+        [StringLength(maximumLength: 50, MinimumLength = 3)]
+        public string Name { get; set; }
+        
+        [Required]
         public string Role { get; set; }
 
         [Required]
