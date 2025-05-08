@@ -1,6 +1,7 @@
 using Project.BusinessLogic.DBModel;
 using Project.Domain;
 using Project.Domain.Entities;
+using Project.Domain.Entities.User;
 using System;
 using System.Data.Entity;
 using System.Diagnostics;
@@ -30,7 +31,7 @@ namespace Project.BusinessLogic.Core
             }
         }
 
-        public async Task<string> LoginUser(string email, string password)
+        public async Task<User> LoginUser(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
@@ -38,24 +39,30 @@ namespace Project.BusinessLogic.Core
             }
 
             string hashedPassword = HashPassword(password);
-            bool userExists = await _db.Users.AnyAsync(u =>
+            UserTable user = await _db.Users.FirstOrDefaultAsync(u =>
                 u.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && u.Password.Equals(hashedPassword)
             );
 
-            if (userExists)
+            if (user != null)
             {
-                return "JWT-TOKEN";
+                return new User
+                {
+                    Id = user.Id,
+                    Role = user.Role,
+                    Email = user.Email,
+                    CreatedAt = user.CreatedAt
+                };
             } else
             {
                 return null;
             }
         }
 
-        public async Task<bool> RegisterUser(string email, string password, CancellationToken cancellationToken = default)
+        public async Task<User> RegisterUser(string email, string password, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                return false;
+                return null;
             }
 
             using (var dbContextTransaction = _db.Database.BeginTransaction())
@@ -66,7 +73,7 @@ namespace Project.BusinessLogic.Core
 
                     if (emailExists)
                     {
-                        return false;
+                        return null;
                     }
 
                     string hashedPassword = HashPassword(password);
@@ -74,24 +81,32 @@ namespace Project.BusinessLogic.Core
                     var user = new UserTable
                     {
                         Email = email,
-                        Password = hashedPassword
+                        Password = hashedPassword,
+                        Role = "User",
+                        CreatedAt = DateTime.UtcNow
                     };
 
                     _db.Users.Add(user);
                     await _db.SaveChangesAsync(cancellationToken);
 
                     dbContextTransaction.Commit();
-                    return true;
+                    return new User
+                    {
+                        Id = user.Id,
+                        Role = user.Role,
+                        Email = user.Email,
+                        CreatedAt = user.CreatedAt
+                    };
                 }
                 catch (OperationCanceledException)
                 {
                     Debug.WriteLine("User registration was canceled.");
-                    return false;
+                    return null;
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error during transactional user registration: {ex.Message}");
-                    return false;
+                    return null;
                 }
             }
         }
