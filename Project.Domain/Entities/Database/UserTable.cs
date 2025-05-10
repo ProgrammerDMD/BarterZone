@@ -1,4 +1,7 @@
+using Project.Domain.Entities.Database;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,7 +15,7 @@ namespace Project.Domain.Entities
         public int Id { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 50, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
         
         [Required]
@@ -29,5 +32,7 @@ namespace Project.Domain.Entities
 
         [Required]
         public DateTime CreatedAt { get; set; }
+
+        public virtual ICollection<ProductTable> Products { get; set; }
     }
 }

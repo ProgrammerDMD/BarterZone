@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Domain.cs" />
     <Compile Include="Entities\Authentication\RegisterViewModel.cs" />
+    <Compile Include="Entities\Database\CategoryTable.cs" />
+    <Compile Include="Entities\Database\ProductTable.cs" />
     <Compile Include="Entities\Database\UserTable.cs" />
     <Compile Include="Entities\Profile\ProfileViewModel.cs" />
     <Compile Include="Entities\User\User.cs" />

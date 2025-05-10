@@ -1,22 +1,28 @@
+using Project.Domain.Entities;
+using Project.Domain.Entities.Database;
 using System;
 using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
-using Project.Domain.Entities;
+using System.Reflection.Emit;
 
 namespace Project.BusinessLogic.DBModel
 {
-    public class UserContext : DbContext
+    public class DatabaseContext : DbContext
     {
         private const string ConnectionStringEnv = "MSSQL_CONNECTION";
         private const string ConnectionStringName = "DefaultConnection";
         
-        public UserContext() : base(GetConnectionString())
+        public DatabaseContext() : base(GetConnectionString())
         {
             
         }
         
         public virtual DbSet<UserTable> Users { get; set; }
+        
+        public virtual DbSet<CategoryTable> Categories { get; set; }
+
+        public virtual DbSet<ProductTable> Products { get; set; }
         
         private static string GetConnectionString()
         {

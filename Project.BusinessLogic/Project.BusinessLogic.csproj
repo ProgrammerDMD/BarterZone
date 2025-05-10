@@ -141,7 +141,7 @@
     <Compile Include="Core\JWT\JwtCookieAuthenticationModule.cs" />
     <Compile Include="Core\JWT\JwtAuthorizer.cs" />
     <Compile Include="Core\UserService.cs" />
-    <Compile Include="DBModel\UserContext.cs" />
+    <Compile Include="DBModel\DatabaseContext.cs" />
     <Compile Include="Migrations\202505072045207_InitialSchema.cs" />
     <Compile Include="Migrations\202505072045207_InitialSchema.Designer.cs">
       <DependentUpon>202505072045207_InitialSchema.cs</DependentUpon>
@@ -158,6 +158,14 @@
     <Compile Include="Migrations\202505081449068_Modified Name Column.Designer.cs">
       <DependentUpon>202505081449068_Modified Name Column.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202505101158313_Created Products &amp; Categories.cs" />
+    <Compile Include="Migrations\202505101158313_Created Products &amp; Categories.Designer.cs">
+      <DependentUpon>202505101158313_Created Products &amp; Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202505101200296_Renamed Categories Table.cs" />
+    <Compile Include="Migrations\202505101200296_Renamed Categories Table.Designer.cs">
+      <DependentUpon>202505101200296_Renamed Categories Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,7 +180,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DBModel\Seed\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +198,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202505081449068_Modified Name Column.resx">
       <DependentUpon>202505081449068_Modified Name Column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505101158313_Created Products &amp; Categories.resx">
+      <DependentUpon>202505101158313_Created Products &amp; Categories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202505101200296_Renamed Categories Table.resx">
+      <DependentUpon>202505101200296_Renamed Categories Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

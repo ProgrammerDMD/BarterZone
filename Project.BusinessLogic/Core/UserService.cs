@@ -15,7 +15,7 @@ namespace Project.BusinessLogic.Core
 {
     public class UserService
     {
-        private readonly UserContext _db = new UserContext();
+        private readonly DatabaseContext _db = new DatabaseContext();
 
         public static string HashPassword(string password)
         {
