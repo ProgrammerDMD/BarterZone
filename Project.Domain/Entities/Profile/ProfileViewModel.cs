@@ -1,3 +1,4 @@
+using Project.Domain.Entities.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Project.Domain.Entities.Profile
         public string Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public List<ProductViewModel> Products { get; set; }
     }
 }

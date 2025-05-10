@@ -34,7 +34,8 @@ namespace Project.BusinessLogic.Core.JWT
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ClockSkew = TimeSpan.Zero
+                    RoleClaimType = "role",
+                    ClockSkew = TimeSpan.Zero,
                 }, out SecurityToken validatedToken);
 
                 httpContext.User = principal;

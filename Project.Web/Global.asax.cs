@@ -22,7 +22,8 @@ namespace Project.Web
            AreaRegistration.RegisterAllAreas();
            RouteConfig.RegisterRoutes(RouteTable.Routes);
            BundleConfig.RegisterBundles(BundleTable.Bundles);
-           AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+           AntiForgeryConfig.UniqueClaimTypeIdentifier = "sub";
+           JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
     }
 }
