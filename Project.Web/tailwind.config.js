@@ -5,7 +5,7 @@ module.exports = {
         './Views/**/*.cshtml',
     ],
     plugins: [
-        require('@tailwindcss/forms'),      
+        require('@tailwindcss/forms'),
         require('preline/plugin'),
     ],
 }

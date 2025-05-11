@@ -1,13 +1,10 @@
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Project.BusinessLogic.Core.JWT
 {
@@ -35,45 +32,37 @@ namespace Project.BusinessLogic.Core.JWT
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     RoleClaimType = "role",
-                    ClockSkew = TimeSpan.Zero,
-                }, out SecurityToken validatedToken);
+                    ClockSkew = TimeSpan.Zero
+                }, out var validatedToken);
 
                 httpContext.User = principal;
-                
-                if (!string.IsNullOrWhiteSpace(requiredRole))
-                {
-                    return principal.IsInRole(requiredRole.ToLower());
-                }
-                
+
+                if (!string.IsNullOrWhiteSpace(requiredRole)) return principal.IsInRole(requiredRole.ToLower());
+
                 return true;
             }
             catch (SecurityTokenValidationException stve)
             {
                 Debug.WriteLine($"JwtAuthorizeAttribute: SecurityTokenValidationException: {stve.Message}");
                 if (stve.InnerException != null)
-                {
                     Debug.WriteLine($"JwtAuthorizeAttribute: Inner Exception: {stve.InnerException.Message}");
-                }
                 return false;
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"JwtAuthorizeAttribute: General Exception during token validation: {e.ToString()}");
+                Debug.WriteLine($"JwtAuthorizeAttribute: General Exception during token validation: {e}");
                 return false;
             }
         }
-        
+
         public static void DeleteAuthCookie(HttpContextBase httpContext)
         {
             var requestCookie = httpContext.Request.Cookies["AuthToken"];
-            string cookiePath = "/";
-            
+            var cookiePath = "/";
+
             if (requestCookie != null)
             {
-                if (!string.IsNullOrEmpty(requestCookie.Path))
-                {
-                    cookiePath = requestCookie.Path;
-                }
+                if (!string.IsNullOrEmpty(requestCookie.Path)) cookiePath = requestCookie.Path;
 
                 var expiredCookie = new HttpCookie("AuthToken")
                 {

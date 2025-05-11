@@ -2,22 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Project.Domain.Entities.User
+namespace Project.Domain.Entities
 {
+    [Table("Users")]
     public class User
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
-        public string Role { get; set; }
+        [Required] public string Role { get; set; }
 
+        [Required]
+        [EmailAddress]
+        [StringLength(255, ErrorMessage = "Invalid email")]
         public string Email { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        [Required]
+        [StringLength(255, ErrorMessage = "Password must be between 8 and 50 characters")]
+        public string Password { get; set; }
+
+        [Required] public DateTime CreatedAt { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

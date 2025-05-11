@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Project.Web.Controllers
 {
     public class HomeController : Controller
     {
-
         // Categories
         // Key = The ID of the category
         // Value = Text to Display
-        private static Dictionary<string, string> categories = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> categories = new Dictionary<string, string>
         {
             ["electronics"] = "Electronics",
             ["clothing_fashion"] = "Clothing & Fashion",
@@ -29,7 +25,7 @@ namespace Project.Web.Controllers
             ["office-school-supplies"] = "Office & School Supplies",
             ["tickets-experiences"] = "Tickets & Experiences"
         };
-        
+
         public ActionResult Index()
         {
             ViewData["categories"] = categories;

@@ -1,67 +1,26 @@
-using Project.BusinessLogic.Core;
-using Project.BusinessLogic.DBModel;
-using Project.Domain.Entities.Profile;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web.Helpers;
 using System.Web.Mvc;
-using System.Xml.Linq;
+using Project.BusinessLogic.Core;
 
 namespace Project.Web.Controllers
 {
     [JwtAuthorize]
     public class ProfileController : Controller
     {
-        private readonly DatabaseContext _context = new DatabaseContext();
+        private readonly UserService _userService = new UserService();
 
         public async Task<ActionResult> Index()
         {
-            var claimsPrincipal = this.User as ClaimsPrincipal;
+            var claimsIdentity = User?.Identity as ClaimsIdentity;
+            if (claimsIdentity == null || !claimsIdentity.IsAuthenticated) return View();
 
-            if (claimsPrincipal != null)
-            {
-                var claimsIdentity = claimsPrincipal.Identity as ClaimsIdentity;
+            var id = claimsIdentity.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            if (id == null || !int.TryParse(id, out var userId)) return View();
 
-                if (claimsIdentity != null && claimsIdentity.IsAuthenticated)
-                {
-                    var Id = claimsIdentity.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-                    var Email = claimsIdentity.FindFirst(JwtRegisteredClaimNames.Email)?.Value;
-                    var Name = claimsIdentity.FindFirst(JwtRegisteredClaimNames.Name)?.Value;
-                    Debug.WriteLine("Id is " + Id);
-                    var IdAsInt = int.Parse(Id);
-                    
-                    var user = await _context.Users.Include("Products.Categories")
-                        .FirstOrDefaultAsync(u => u.Id == IdAsInt);
-
-                    var viewModel = new ProfileViewModel
-                    {
-                        Id = Id,
-                        Email = Email,
-                        Name = Name,
-                        Products = user.Products.Select(product => new Domain.Entities.Product.ProductViewModel
-                                    {
-                                        Id = product.Id,
-                                        Title = product.Title,
-                                        Price = product.Price,
-                                        CreatedAt = product.CreatedAt,
-                                        CategoryNames = product.Categories != null
-                                                        ? product.Categories.Select(c => c.Name).ToList()
-                                                        : new List<string>()
-                                    })
-                                    .OrderByDescending(p => p.CreatedAt)
-                                    .ToList()
-                    };
-
-                    return View(viewModel);
-                }
-            }
-
-            return View();
+            var profile = await _userService.GetProfileById(userId);
+            return View(profile);
         }
     }
 }

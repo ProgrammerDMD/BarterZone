@@ -1,17 +1,12 @@
-using Project.Domain.Entities.Product;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Project.Domain.Entities.Profile
+namespace Project.Domain.Entities
 {
     public class ProfileViewModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public List<ProductViewModel> Products { get; set; }
+        public IEnumerable<ProductSummaryViewModel> Products { get; set; }
     }
 }

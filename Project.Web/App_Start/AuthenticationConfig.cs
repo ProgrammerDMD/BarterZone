@@ -1,12 +1,14 @@
+using System;
+using System.Configuration;
+using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Jwt;
 using Owin;
-using System;
-using System.Configuration;
-using System.Text;
+using Project.Web;
 
-[assembly: OwinStartup(typeof(Project.Web.AuthenticationConfig))]
+[assembly: OwinStartup(typeof(AuthenticationConfig))]
+
 namespace Project.Web
 {
     public class AuthenticationConfig
