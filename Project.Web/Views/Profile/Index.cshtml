@@ -59,13 +59,23 @@
                                     @product.Title
                                 </h3>
                                 <a class="mt-2 inline-flex items-center justify-center gap-x-2 rounded-lg border border-transparent bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                                   href="#">
-                                    Go somewhere
+                                   href="@Url.Action("Details", "Product", new { id = product.Id })">
+                                    Go to product
                                 </a>
                             </div>
                         </div>
                     }
                 }
+                <a href="@Url.Action("Create", "Product")"
+                   class="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-white shadow-sm hover:border-blue-500 hover:bg-blue-50 transition-all p-4 md:p-5 min-h-[200px] group"> @* min-h-[value] can be adjusted to match other cards *@
+                    <svg class="size-12 text-gray-400 group-hover:text-blue-600 transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/>
+                        <path d="M12 5v14"/>
+                    </svg>
+                    <p class="mt-2 text-sm font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
+                        Add New Product
+                    </p>
+                </a>
             </div>
         </div>
         <div id="bar-with-underline-2" class="hidden" role="tabpanel" aria-labelledby="bar-with-underline-item-2">
