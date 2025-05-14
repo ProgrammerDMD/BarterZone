@@ -5,7 +5,7 @@
 
     var categories = ViewData["categories"] as Dictionary<string, string> ?? new Dictionary<string, string>();
     
-    var pagesToDisplayCount = 3;
+    var pagesToDisplayCount = 5;
     var currentPageFromModel = Model.CurrentPage;
     var totalPages = Model.TotalPages;
 
@@ -46,31 +46,27 @@
     <div class="flex flex-col justify-center w-full px-12 gap-4">
         <div class="flex gap-2 w-full justify-between max-sm:flex-col max-sm:mx-auto">
             <!-- Search -->
-            <div class="max-w-lg max-sm:w-full max-sm:max-w-full">
-                <div class="relative">
-                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
-                        <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24"
-                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </svg>
+            <form method="get" action="@Url.Action("Index", "Home")">
+                <div class="max-w-lg max-sm:w-full max-sm:max-w-full">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+                            <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24"
+                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </svg>
+                        </div>
+                        <input
+                            class="py-2 ps-10 pe-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                            type="text"
+                            name="search"
+                            placeholder="Search for an object"
+                            value="@Model.Search"
+                            data-hs-combo-box-input="">
                     </div>
-                    <input
-                        class="py-2 ps-10 pe-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                        type="text" role="combobox" aria-expanded="false" placeholder="Search for an object" value=""
-                        data-hs-combo-box-input="">
                 </div>
-
-                <!-- SearchBox Dropdown -->
-                <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg" style="display: none;"
-                     data-hs-combo-box-output="">
-                    <div
-                        class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300"
-                        data-hs-combo-box-output-items-wrapper=""></div>
-                </div>
-                <!-- End SearchBox Dropdown -->
-            </div>
+            </form>
             <!-- End Search -->
             <div class="flex gap-2">
                 <!-- Category -->
@@ -211,7 +207,7 @@
     <nav class="flex items-center gap-x-1" aria-label="Pagination">
         @if (Model.CurrentPage > 1 && totalPages > 0)
         {
-            <a href="@Url.Action("Index", "Home", new { page = previousPageLink })"
+            <a href="@Url.Action("Index", "Home", new { page = previousPageLink, search = Model.Search  })"
                class="min-h-[38px] min-w-[38px] py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
                aria-label="Previous">
                 <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -234,7 +230,7 @@
                 i.ToString(),
                 "Index",
                 "Home",
-                new { page = i },
+                new { page = i, search = Model.Search },
                 new
                 {
                     @class = pageClass
@@ -244,7 +240,7 @@
 
         @if (Model.CurrentPage < totalPages && totalPages > 0)
         {
-            <a href="@Url.Action("Index", "Home", new { page = nextPageLink })"
+            <a href="@Url.Action("Index", "Home", new { page = nextPageLink, search = Model.Search  })"
                class="min-h-[38px] min-w-[38px] py-2 px-3 inline-flex justify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
                aria-label="Next">
                 <span>Next</span>

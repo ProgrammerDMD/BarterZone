@@ -30,12 +30,12 @@ namespace Project.Web.Controllers
             ["tickets-experiences"] = "Tickets & Experiences"
         };
 
-        public async Task<ActionResult> Index(int? page)
+        public async Task<ActionResult> Index(string search, int? page)
         {
             ViewData["categories"] = categories;
             int currentPage = page ?? 1;
             
-            var products = await _productService.GetProductsByPage(currentPage - 1, 1);
+            var products = await _productService.GetProductsByPage(currentPage - 1, 25, search);
             return View(products);
         }
 

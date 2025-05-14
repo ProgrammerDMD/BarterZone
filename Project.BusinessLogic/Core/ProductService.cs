@@ -11,14 +11,25 @@ namespace Project.BusinessLogic.Core
     {
         private readonly DatabaseContext _db = new DatabaseContext();
 
-        public async Task<ProductViewModel> GetProductsByPage(int page, int pageSize)
+        public async Task<ProductViewModel> GetProductsByPage(int page, int pageSize, string search = null)
         {
             if (page < 0) page = 0;
-            
-            var productsQuery = _db.Products.OrderBy(p => p.Id);
+
+            IQueryable<Product> productsQuery = _db.Products;
             var offset = page * pageSize;
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var searchTermLower = search.ToLower();
+                productsQuery = productsQuery.Where(p =>
+                    (p.Title != null && p.Title.ToLower().Contains(searchTermLower)) ||
+                    (p.Description != null && p.Description.ToLower().Contains(searchTermLower))
+                );
+            }
             
-            var pagedProducts = await productsQuery
+            var orderedQuery = productsQuery.OrderBy(p => p.Id);
+            
+            var pagedProducts = await orderedQuery
                 .Skip(offset)
                 .Take(pageSize)
                 .ToListAsync();
@@ -37,6 +48,7 @@ namespace Project.BusinessLogic.Core
                     CreatedAt = p.CreatedAt,
                     Categories = p.Categories
                 }).ToList(),
+                Search = search,
                 CurrentPage = page + 1,
                 TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize),
                 PageSize = pageSize
