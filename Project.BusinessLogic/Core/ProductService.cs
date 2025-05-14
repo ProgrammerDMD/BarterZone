@@ -13,18 +13,18 @@ namespace Project.BusinessLogic.Core
 
         public async Task<ProductViewModel> GetProductsByPage(int page, int pageSize)
         {
-            if (page < 1) page = 1;
-
-            var skipAmount = (page - 1) * pageSize;
+            if (page < 0) page = 0;
+            
             var productsQuery = _db.Products.OrderBy(p => p.Id);
-
+            var offset = page * pageSize;
+            
             var pagedProducts = await productsQuery
-                .Skip(skipAmount)
+                .Skip(offset)
                 .Take(pageSize)
                 .ToListAsync();
 
             var totalProducts = await productsQuery.CountAsync();
-
+            
             return new ProductViewModel
             {
                 Products = pagedProducts.Select(p => new Product
@@ -37,8 +37,9 @@ namespace Project.BusinessLogic.Core
                     CreatedAt = p.CreatedAt,
                     Categories = p.Categories
                 }).ToList(),
-                CurrentPage = page,
-                TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize)
+                CurrentPage = page + 1,
+                TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize),
+                PageSize = pageSize
             };
         }
     }
