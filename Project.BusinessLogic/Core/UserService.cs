@@ -104,8 +104,7 @@ namespace Project.BusinessLogic.Core
                             Title = p.Title,
                             Price = p.Price,
                             Description = p.Description,
-                            Categories = p.Categories.OrderBy(c => c.Id)
-                                .Select(c => c.Name),
+                            CategoryId = p.CategoryId,
                             CreatedAt = p.CreatedAt
                         })
                 }).FirstOrDefaultAsync();

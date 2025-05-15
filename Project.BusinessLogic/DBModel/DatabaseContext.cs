@@ -32,5 +32,15 @@ namespace Project.BusinessLogic.DBModel
 
             return connStr;
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Product>()
+                .HasRequired(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .WillCascadeOnDelete(false);
+        }
     }
 }
