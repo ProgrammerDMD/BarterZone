@@ -27,7 +27,7 @@ namespace Project.Domain.Entities
         public double Price { get; set; }
 
         [Required]
-        [StringLength(1024, MinimumLength = 100)]
+        [StringLength(1024, MinimumLength = 30)]
         public string Description { get; set; }
 
         [ForeignKey("Category")]

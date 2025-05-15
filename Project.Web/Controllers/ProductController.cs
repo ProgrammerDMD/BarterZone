@@ -34,6 +34,7 @@ namespace Project.Web.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "The submitted form is invalid!");
+                ViewData["categories"] = ProductService.categories;
                 return View(model);
             }
             
@@ -48,10 +49,11 @@ namespace Project.Web.Controllers
             if (result == -1)
             {
                 ModelState.AddModelError("", "The submitted form is invalid!");
+                ViewData["categories"] = ProductService.categories;
                 return View(model);
             }
             
-            return RedirectToAction("Details", "Product", new { id = id });
+            return RedirectToAction("Details", "Product", new { id = result });
         }
     }
 }

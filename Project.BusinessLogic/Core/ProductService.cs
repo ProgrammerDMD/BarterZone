@@ -43,7 +43,7 @@ namespace Project.BusinessLogic.Core
                 var fileName = Path.GetFileNameWithoutExtension(model.Image.FileName);
                 var extension = Path.GetExtension(model.Image.FileName);
                 fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                var directoryPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Uploads/Products");
+                var directoryPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/Uploads");
 
                 if (directoryPath != null && !Directory.Exists(directoryPath))
                 {
